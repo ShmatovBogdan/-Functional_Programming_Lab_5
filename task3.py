@@ -2,29 +2,39 @@
 
 # Добуток типів Matrix2. Операції: детермінант, обернена, добуток.
 
-def matrix_det(m):
+from __future__ import annotations
+from dataclasses import dataclasss
+
+@dataclasss(frozen=True)
+class Matrix2x2:
+    a1: float
+    a2: float
+    b1: float
+    b2: float
+
+def matrix_det(m) -> float:
     match m:
-        case ((a, b), (c, d)):
+        case Matrix2x2((a, b), (c, d)):
             return a*d - b*c
 
-def matrix_inv(m):
+def matrix_inv(m) -> Matrix2x2:
     match m:
-        case ((a, b), (c, d)):
+        case Matrix2x2((a, b), (c, d)):
             det = a*d - b*c
             if det == 0:
                 raise ValueError("Matrix is singular")
-            return ((d/det, -b/det), (-c/det, a/det))
+            return Matrix2x2((d/det, -b/det), (-c/det, a/det))
 
-def matrix_mul(m1, m2):
+def matrix_mul(m1, m2) -> Matrix2x2:
     match m1, m2:
-        case ((a1, b1), (c1, d1)), ((a2, b2), (c2, d2)):
-            return ((a1*a2 + b1*c2, a1*b2 + b1*d2),
+        case (Matrix2x2((a1, b1), (c1, d1)), Matrix2x2((a2, b2), (c2, d2))):
+            return Matrix2x2((a1*a2 + b1*c2, a1*b2 + b1*d2),
                     (c1*a2 + d1*c2, c1*b2 + d1*d2))
 
 if __name__ == "__main__":
     m0 = (1, 2)
-    m1 = ((1, 2), (3, 4))
-    m2 = ((2, 0), (1, 2))
+    m1 = Matrix2x2((1, 2), (3, 4))
+    m2 = Matrix2x2((2, 0), (1, 2))
     print("Det m1:", matrix_det(m1))
     print("Mul m1*m2:", matrix_mul(m1, m2))
     print("Inv m1:", matrix_inv(m1))
