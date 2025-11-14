@@ -4,10 +4,10 @@
 # Реалізувати операції норми, скалярний, векторний добуток, змішаний добуток.
 
 from __future__ import annotations
-from dataclasses import dataclasss
+from dataclasses import dataclass
 from math import sqrt
 
-@dataclasss(frozen=True)
+@dataclass(frozen=True)
 class Vector2D:
     x: float
     y: float
